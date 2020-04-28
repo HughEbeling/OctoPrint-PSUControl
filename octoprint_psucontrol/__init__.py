@@ -311,8 +311,10 @@ class PSUControl(octoprint.plugin.StartupPlugin,
             try:
                 if not self.invertonoffGPIOPin:
                     initial_pin_output=GPIO.LOW
+                    os.system ("sudo ~/hub-ctrl -h 0 -P 2 -p 1")
                 else:
                     initial_pin_output=GPIO.HIGH
+                    os.system ("sudo ~/hub-ctrl -h 0 -P 2 -p 0")
                 GPIO.setup(self._gpio_get_pin(self.onoffGPIOPin), GPIO.OUT, initial=initial_pin_output)
                 self._configuredGPIOPins.append(self.onoffGPIOPin)
             except (RuntimeError, ValueError) as e:
@@ -528,7 +530,7 @@ class PSUControl(octoprint.plugin.StartupPlugin,
                 self._logger.debug("Switching PSU On Using GPIO: %s" % self.onoffGPIOPin)
                 if not self.invertonoffGPIOPin:
                     pin_output=GPIO.HIGH
-                    os.system("sudo ~/hub-ctrl -h 0 -P 2 -p 1")
+                    os.system("sudo ~/hub-ctrl -h 0 -P 2 -p 0")
                 else:
                     pin_output=GPIO.LOW
                     os.system("sudo ~/hub-ctrl -h 0 -P 2 -p 1")
@@ -567,7 +569,7 @@ class PSUControl(octoprint.plugin.StartupPlugin,
                 self._logger.debug("Switching PSU Off Using GPIO: %s" % self.onoffGPIOPin)
                 if not self.invertonoffGPIOPin:
                     pin_output=GPIO.LOW
-                    os.system ("sudo ~/hub-ctrl -h 0 -P 2 -p 0")
+                    os.system ("sudo ~/hub-ctrl -h 0 -P 2 -p 1")
                 else:
                     pin_output=GPIO.HIGH
                     os.system ("sudo ~/hub-ctrl -h 0 -P 2 -p 0")
